@@ -33,8 +33,8 @@ public class carcontroller : MonoBehaviour
         }
         //speed of car, Car will move as you will provide the input to it.
 
-        WheelRR.motorTorque = maxTorque * 50 * Input.GetAxis("Vertical");
-        WheelRL.motorTorque = maxTorque * 50 * Input.GetAxis("Vertical");
+        WheelRR.motorTorque = maxTorque * Input.GetAxis("Vertical");
+        WheelRL.motorTorque = maxTorque * Input.GetAxis("Vertical");
 
         //changing car direction
         //Here we are changing the steer angle of the front tires of the car so that we can change the car direction.
