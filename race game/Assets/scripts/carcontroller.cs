@@ -9,7 +9,7 @@ public class carcontroller : MonoBehaviour
     private float verticalInput;
     private float steerAngle;
     private bool isBreaking;
-    private bool isDrifting;
+    private float Brakes;
 
     public WheelCollider frontLeftWheelCollider;
     public WheelCollider frontRightWheelCollider;
@@ -22,9 +22,8 @@ public class carcontroller : MonoBehaviour
 
     public float maxSteeringAngle = 30f;
     public float motorForce = 2000f;
-    public float brakeForce = 2f;
-    public float driftangle = 10f;
-
+    public float breakForce = 20f;
+    
 
     private void FixedUpdate()
     {
@@ -32,6 +31,7 @@ public class carcontroller : MonoBehaviour
         HandleMotor();
         HandleSteering();
         UpdateWheels();
+        ApplyBreaking();
     }
 
     private void GetInput()
@@ -39,38 +39,30 @@ public class carcontroller : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         isBreaking = Input.GetKey(KeyCode.Space);
-        isDrifting = Input.GetKey(KeyCode.LeftShift); 
     }
 
     private void HandleSteering()
     {
         steerAngle = maxSteeringAngle * horizontalInput;
-        if(isDrifting == true)
-        {
-            steerAngle = steerAngle * driftangle;
-        }
-        
-        
-            frontLeftWheelCollider.steerAngle = steerAngle ;
-            frontRightWheelCollider.steerAngle = steerAngle ;
-        
 
-
-
+        frontLeftWheelCollider.steerAngle = steerAngle ;
+        frontRightWheelCollider.steerAngle = steerAngle ;
     }
 
     private void HandleMotor()
     {
         frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
-        rearLeftWheelCollider.motorTorque = verticalInput * motorForce;
-        rearRightWheelCollider.motorTorque = verticalInput * motorForce;
+        Brakes = isBreaking ? breakForce : 0f;
+        ApplyBreaking();
+    }
 
-        brakeForce = isBreaking ? motorForce : 0f;
-        frontLeftWheelCollider.brakeTorque = brakeForce;
-        frontRightWheelCollider.brakeTorque = brakeForce;
-        rearLeftWheelCollider.brakeTorque = brakeForce;
-        rearRightWheelCollider.brakeTorque = brakeForce;
+    private void ApplyBreaking()
+    {
+        frontLeftWheelCollider.brakeTorque = Brakes;
+        frontRightWheelCollider.brakeTorque = Brakes;
+        rearLeftWheelCollider.brakeTorque = Brakes;
+        rearRightWheelCollider.brakeTorque = Brakes;
     }
 
     private void UpdateWheels()
