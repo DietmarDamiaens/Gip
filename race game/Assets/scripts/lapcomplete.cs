@@ -10,38 +10,48 @@ public class lapcomplete : MonoBehaviour
     public GameObject checkpoint1trig;
 
     public GameObject mindisplay;
-    public GameObject seconddisplay;
+    public GameObject secondedisplay;
     public GameObject milliedisplay;
+    private int minutebest = 0;
+    private int secondbest = 0;
+    private float millibest = 0;
 
     public GameObject laptimebox;
 
     void ontriggerenter()
     {
-        if(laptimemanager.secondcount <= 9)
+        if(minutebest < laptimemanager.minutecount)
         {
-            seconddisplay.GetComponent<Text>().text = "0" + laptimemanager.secondcount + ".";
+            laptimemanager.seconddisplay = "" + secondedisplay;
+
+            laptimemanager.millidisplay = "" + milliedisplay;
+
+            laptimemanager.minutedisplay = "" + mindisplay;
+
         }
-        else
+        else if(minutebest == laptimemanager.minutecount && secondbest < laptimemanager.secondcount)
         {
-            seconddisplay.GetComponent<Text>().text = "" + laptimemanager.secondcount + ".";
+            laptimemanager.seconddisplay = "" + secondedisplay;
+
+            laptimemanager.millidisplay = "" + milliedisplay;
+
+            laptimemanager.minutedisplay = "" + mindisplay;
+        }
+        else if (minutebest == laptimemanager.minutecount && secondbest == laptimemanager.secondcount && millibest < laptimemanager.millicount)
+        {
+            laptimemanager.seconddisplay = "" + secondedisplay;
+
+            laptimemanager.millidisplay = "" + milliedisplay;
+
+            laptimemanager.minutedisplay = "" + mindisplay;
         }
 
-        laptimemanager.millidisplay.GetComponent<Text>().text = "" + milliedisplay;
-        
 
-        if (laptimemanager.minutecount <= 9)
-        {
-            laptimemanager.minutebox.GetComponent<Text>().text = "0" + minutedisplay + ":";
-        }
-        else
-        {
-            laptimemanager.minutebox.GetComponent<Text>().text = "" + minutedisplay + ":";
-        }
 
-        laptimemanager.minutecount = 0;
+
+            laptimemanager.minutecount = 0;
         laptimemanager.secondcount = 0;
         laptimemanager.millicount = 0;
-
 
     }
 
