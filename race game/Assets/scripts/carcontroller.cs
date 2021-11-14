@@ -9,6 +9,7 @@ public class carcontroller : MonoBehaviour
     private float verticalInput;
     private float steerAngle;
     private bool isBreaking;
+    private bool isDrifting;
 
     public WheelCollider frontLeftWheelCollider;
     public WheelCollider frontRightWheelCollider;
@@ -20,8 +21,9 @@ public class carcontroller : MonoBehaviour
     public Transform rearRightWheelTransform;
 
     public float maxSteeringAngle = 30f;
-    public float motorForce = 10000f;
-    public float brakeForce = 0f;
+    public float motorForce = 2000f;
+    public float brakeForce = 2f;
+    public float driftangle = 10f;
 
 
     private void FixedUpdate()
@@ -37,21 +39,34 @@ public class carcontroller : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         isBreaking = Input.GetKey(KeyCode.Space);
+        isDrifting = Input.GetKey(KeyCode.LeftShift); 
     }
 
     private void HandleSteering()
     {
         steerAngle = maxSteeringAngle * horizontalInput;
-        frontLeftWheelCollider.steerAngle = steerAngle;
-        frontRightWheelCollider.steerAngle = steerAngle;
+        if(isDrifting == true)
+        {
+            steerAngle = steerAngle * driftangle;
+        }
+        
+        
+            frontLeftWheelCollider.steerAngle = steerAngle ;
+            frontRightWheelCollider.steerAngle = steerAngle ;
+        
+
+
+
     }
 
     private void HandleMotor()
     {
         frontLeftWheelCollider.motorTorque = verticalInput * motorForce;
         frontRightWheelCollider.motorTorque = verticalInput * motorForce;
+        rearLeftWheelCollider.motorTorque = verticalInput * motorForce;
+        rearRightWheelCollider.motorTorque = verticalInput * motorForce;
 
-        brakeForce = isBreaking ? 3000f : 0f;
+        brakeForce = isBreaking ? motorForce : 0f;
         frontLeftWheelCollider.brakeTorque = brakeForce;
         frontRightWheelCollider.brakeTorque = brakeForce;
         rearLeftWheelCollider.brakeTorque = brakeForce;
