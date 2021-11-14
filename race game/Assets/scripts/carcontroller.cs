@@ -23,7 +23,7 @@ public class carcontroller : MonoBehaviour
     public float maxSteeringAngle = 30f;
     public float motorForce = 2000f;
     public float breakForce = 20f;
-    
+
 
     private void FixedUpdate()
     {
@@ -45,8 +45,8 @@ public class carcontroller : MonoBehaviour
     {
         steerAngle = maxSteeringAngle * horizontalInput;
 
-        frontLeftWheelCollider.steerAngle = steerAngle ;
-        frontRightWheelCollider.steerAngle = steerAngle ;
+        frontLeftWheelCollider.steerAngle = steerAngle;
+        frontRightWheelCollider.steerAngle = steerAngle;
     }
 
     private void HandleMotor()
