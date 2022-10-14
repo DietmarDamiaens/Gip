@@ -8,8 +8,6 @@ public class laptimemanager : MonoBehaviour
     public static int minutecount;
     public static int secondcount;
     public static float millicount;
-    public static string minutedisplay;
-    public static string seconddisplay;
     public static string millidisplay;
     public GameObject minutebox;
     public GameObject secondbox;
@@ -35,9 +33,8 @@ public class laptimemanager : MonoBehaviour
         {
             secondbox.GetComponent<Text>().text = "" + secondcount + ".";
         }
-        seconddisplay = secondbox.GetComponent<Text>().text;
 
-        if (secondcount >= 60)
+        if(secondcount >= 60)
         {
             secondcount = 0;
             minutecount = minutecount + 1;
@@ -51,7 +48,5 @@ public class laptimemanager : MonoBehaviour
         {
             minutebox.GetComponent<Text>().text = "" + minutecount + ":";
         }
-
-        minutedisplay = minutebox.GetComponent<Text>().text;
     }
 }
